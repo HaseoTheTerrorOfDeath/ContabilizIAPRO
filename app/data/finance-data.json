@@ -1,0 +1,16 @@
+{
+  "endividamentoAnterior": 30,
+  "endividamentoAtual": 56,
+  "eventos": [
+    {
+      "tipo": "empréstimo",
+      "valor": 25000,
+      "data": "2025-04-20"
+    }
+  ],
+  "balanco": {
+    "ativos": 80000,
+    "passivos": 45000
+  }
+}
+
