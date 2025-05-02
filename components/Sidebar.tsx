@@ -87,7 +87,7 @@ export default function Sidebar() {
             <Menu className="w-5 h-5" />
           </button>
           {!isCollapsed && (
-            <span className="text-lg font-bold bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent">
+            <span className="text-lg font-bold bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent transition-all duration-300 ease-in-out">
               ContabilizIA
             </span>
           )}
@@ -112,7 +112,7 @@ export default function Sidebar() {
                   <span className={clsx('flex items-center', isCollapsed && 'justify-center')}>
                     <Icon className="w-4 h-4 text-yellow-400" />
                     {!isCollapsed && (
-                      <span className="ml-2 bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent">
+                      <span className="ml-2 bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent transition-all duration-300 ease-in-out">
                         {group.title}
                       </span>
                     )}
@@ -127,21 +127,34 @@ export default function Sidebar() {
 
                 {openGroup === group.title && !isCollapsed && (
                   <ul className="mt-2 pl-6 space-y-1 text-sm">
-                    {group.items.map((item) => (
-                      <li key={item.href}>
-                        <Link
-                          href={item.href}
-                          className={clsx(
-                            'block py-1 px-2 rounded hover:bg-yellow-500 hover:text-black transition',
-                            pathname === item.href && 'bg-yellow-400 text-black font-semibold'
-                          )}
-                        >
-                          <span className="bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent">
-                            {item.label}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
+                    {group.items.map((item) => {
+                      const isActive = pathname === item.href
+
+                      return (
+                        <li key={item.href}>
+                          <Link
+                            href={item.href}
+                            className={clsx(
+                              'group block py-1 px-2 rounded transition-all duration-300 ease-in-out font-semibold',
+                              isActive
+                                ? 'bg-gradient-to-r from-amber-400 to-yellow-600'
+                                : 'hover:bg-gradient-to-r hover:from-amber-400 hover:to-yellow-500'
+                            )}
+                          >
+                            <span
+                              className={clsx(
+                                'transition-all duration-300 ease-in-out',
+                                isActive
+                                  ? 'bg-gradient-to-r from-black via-zinc-900 to-black bg-clip-text text-transparent'
+                                  : 'bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent group-hover:from-black group-hover:via-zinc-900 group-hover:to-black group-hover:text-transparent'
+                              )}
+                            >
+                              {item.label}
+                            </span>
+                          </Link>
+                        </li>
+                      )
+                    })}
                   </ul>
                 )}
               </div>
@@ -155,7 +168,7 @@ export default function Sidebar() {
         <Link
           href="/assistente"
           className={clsx(
-            'flex items-center text-black font-bold py-2 px-4 rounded hover:opacity-90 transition w-full',
+            'flex items-center text-black font-bold py-2 px-4 rounded hover:opacity-90 transition-all duration-300 ease-in-out w-full',
             'bg-gradient-to-r from-amber-400 to-yellow-500',
             isCollapsed ? 'justify-center p-2' : 'justify-center'
           )}

@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import AutoAnalyzer from '@/components/AutoAnalyzer'
+import { Providers } from '@/components/Providers'
 
 export const metadata = {
   title: 'ContabilizIA',
@@ -10,8 +10,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR">
       <body>
-        <AutoAnalyzer />
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   )
