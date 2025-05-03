@@ -48,7 +48,7 @@ export default function AssistentePage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-zinc-950 via-black to-neutral-900 text-white">
+    <div className="flex min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black text-white">
       {/* Sidebar fixa à esquerda */}
       <Sidebar />
 
