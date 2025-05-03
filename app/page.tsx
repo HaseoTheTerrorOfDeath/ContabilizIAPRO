@@ -35,7 +35,7 @@ export default function Home() {
 
         {/* Features + Login */}
         <div className="flex flex-col lg:flex-row gap-10 w-full max-w-7xl justify-center items-start">
-          {/* Features */}
+          {/* Feature Cards */}
           <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8">
             <FeatureCard
               icon={<FileText className="h-10 w-10 text-yellow-400 hover:shadow-yellow-500/50 transition" />}
@@ -64,7 +64,9 @@ export default function Home() {
             <div className="bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 rounded-2xl shadow-xl overflow-hidden flex flex-col items-center max-w-md w-full border border-zinc-800">
               {/* Top gold part */}
               <div className="w-full bg-gradient-to-r from-amber-400 to-yellow-600 p-6 text-center">
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 bg-clip-text text-transparent">Acesse sua conta</h3>
+                <h3 className="text-3xl font-bold bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 bg-clip-text text-transparent">
+                  Acesse sua conta
+                </h3>
                 <p className="text-black text-sm mt-1">Conecte-se com segurança</p>
               </div>
 
@@ -74,7 +76,7 @@ export default function Home() {
                   Faça login para acessar todos os recursos premium do ContabilizIA.
                 </p>
 
-                {/* Botões de login com animação e alinhamento */}
+                {/* Botões de login */}
                 <div className="flex flex-col gap-4 w-full max-w-xs">
                   <LoginButton icon="/icons/apple.svg" text="Entrar com Apple" disabled />
                   <LoginButton icon="/icons/google.svg" text="Entrar com Google" onClick={() => signIn('google')} />
@@ -89,7 +91,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Footer Security */}
+        {/* Footer */}
         <div className="mt-12 text-center text-sm bg-zinc-900 p-4 rounded-lg shadow-md max-w-3xl border border-zinc-800">
           <span className="bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent font-semibold">
             Segurança de padrão bancário:
@@ -112,9 +114,7 @@ function FeatureCard({
   description: string
 }) {
   return (
-    <div
-      className="bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 rounded-2xl border border-zinc-800 hover:border-yellow-400 shadow-lg hover:shadow-yellow-500/20 transition duration-300 p-6 flex flex-col items-center cursor-pointer hover:scale-105"
-    >
+    <div className="bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 rounded-2xl border border-zinc-800 hover:border-yellow-400 shadow-lg hover:shadow-yellow-500/20 transition duration-300 p-6 flex flex-col items-center cursor-pointer hover:scale-105">
       <div className="mb-4">{icon}</div>
       <h3 className="text-lg font-semibold text-white mb-1">{title}</h3>
       <p className="text-sm text-zinc-400 text-center">{description}</p>
@@ -138,10 +138,10 @@ function LoginButton({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`flex items-center gap-3 ${
+      className={`flex items-center gap-3 w-full ${
         disabled
-          ? 'bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 cursor-not-allowed'
-          : 'bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 hover:bg-gradient-to-r from-amber-400 to-yellow-600 hover:text-yellow hover:shadow-lg'
+          ? 'bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 cursor-not-allowed border border-zinc-700'
+          : 'bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 border border-zinc-800 hover:border-yellow-400 hover:shadow-yellow-500/30'
       } text-white font-medium py-2 px-4 rounded-md transition-all duration-300 transform hover:scale-105`}
     >
       <span className="w-5 h-5 flex items-center justify-center">

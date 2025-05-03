@@ -16,6 +16,7 @@ import {
   Menu,
 } from 'lucide-react'
 import clsx from 'clsx'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const menuItems = [
   {
@@ -72,104 +73,117 @@ export default function Sidebar() {
   return (
     <aside
       className={clsx(
-        'h-screen text-white flex flex-col justify-between border-r border-neutral-800 transition-all duration-300',
-        'bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900',
+        'h-screen flex flex-col justify-between border-r border-zinc-800 transition-all duration-300 text-white',
+        'bg-gradient-to-br from-black via-zinc-900 to-black',
         isCollapsed ? 'w-16' : 'w-64'
       )}
     >
       <div>
-        {/* Botão colapsável com título em gradiente */}
-        <div className="flex items-center p-4 space-x-2">
+        {/* Cabeçalho */}
+        <div className="flex items-center p-4">
           <button
             onClick={toggleSidebar}
-            className="text-yellow-400 hover:text-yellow-300 transition"
+            className="text-yellow-400 hover:text-yellow-300 transition focus:outline-none"
+            title={isCollapsed ? 'Expandir menu' : 'Recolher menu'}
           >
             <Menu className="w-5 h-5" />
           </button>
           {!isCollapsed && (
-            <span className="text-lg font-bold bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent transition-all duration-300 ease-in-out">
+            <span className="ml-3 text-lg font-bold bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent">
               ContabilizIA
             </span>
           )}
         </div>
 
-        {/* Menu principal */}
-        <nav className="space-y-4 px-2">
+        {/* Menu */}
+        <nav className="space-y-2 px-2">
           {menuItems.map((group) => {
             const Icon = group.icon
+            const isOpen = openGroup === group.title
 
             return (
               <div key={group.title}>
                 <button
                   onClick={() => toggleGroup(group.title)}
                   className={clsx(
-                    'w-full transition-all text-left font-semibold uppercase text-sm hover:text-yellow-300',
-                    isCollapsed
-                      ? 'flex justify-center py-3 text-yellow-400'
-                      : 'flex items-center justify-between'
+                    'w-full flex items-center transition-all px-3 py-2 rounded-md text-sm font-semibold group',
+                    'hover:bg-zinc-800 hover:border hover:border-yellow-400',
+                    isCollapsed ? 'justify-center px-0' : 'justify-between'
                   )}
+                  title={isCollapsed ? group.title : undefined}
                 >
-                  <span className={clsx('flex items-center', isCollapsed && 'justify-center')}>
-                    <Icon className="w-4 h-4 text-yellow-400" />
+                  <span
+                    className={clsx(
+                      'flex items-center',
+                      isCollapsed ? 'justify-center w-full' : 'gap-2'
+                    )}
+                  >
+                    <Icon
+                      className={clsx(
+                        'w-5 h-5 text-yellow-400 transition',
+                        'group-hover:text-yellow-300',
+                        isCollapsed && 'mx-auto'
+                      )}
+                    />
                     {!isCollapsed && (
-                      <span className="ml-2 bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent transition-all duration-300 ease-in-out">
+                      <span className="text-yellow-400 group-hover:text-yellow-300 transition">
                         {group.title}
                       </span>
                     )}
                   </span>
                   {!isCollapsed &&
-                    (openGroup === group.title ? (
-                      <ChevronDown className="w-4 h-4 text-yellow-400" />
+                    (isOpen ? (
+                      <ChevronDown className="w-4 h-4 text-yellow-400 transition" />
                     ) : (
-                      <ChevronRight className="w-4 h-4 text-yellow-400" />
+                      <ChevronRight className="w-4 h-4 text-yellow-400 transition" />
                     ))}
                 </button>
 
-                {openGroup === group.title && !isCollapsed && (
-                  <ul className="mt-2 pl-6 space-y-1 text-sm">
-                    {group.items.map((item) => {
-                      const isActive = pathname === item.href
-
-                      return (
-                        <li key={item.href}>
-                          <Link
-                            href={item.href}
-                            className={clsx(
-                              'group block py-1 px-2 rounded transition-all duration-300 ease-in-out font-semibold',
-                              isActive
-                                ? 'bg-gradient-to-r from-amber-400 to-yellow-600'
-                                : 'hover:bg-gradient-to-r hover:from-amber-400 hover:to-yellow-500'
-                            )}
-                          >
-                            <span
+                {/* Subitens com animação */}
+                <AnimatePresence initial={false}>
+                  {isOpen && !isCollapsed && (
+                    <motion.ul
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden mt-1 pl-6 space-y-1 text-sm"
+                    >
+                      {group.items.map((item) => {
+                        const isActive = pathname === item.href
+                        return (
+                          <li key={item.href}>
+                            <Link
+                              href={item.href}
                               className={clsx(
-                                'transition-all duration-300 ease-in-out',
+                                'block px-3 py-1 rounded transition-all font-medium',
                                 isActive
-                                  ? 'bg-gradient-to-r from-black via-zinc-900 to-black bg-clip-text text-transparent'
-                                  : 'bg-gradient-to-r from-amber-400 to-yellow-600 bg-clip-text text-transparent group-hover:from-black group-hover:via-zinc-900 group-hover:to-black group-hover:text-transparent'
+                                  ? 'border border-yellow-400 bg-yellow-500/20 text-yellow-300'
+                                  : 'hover:bg-zinc-800 hover:border hover:border-yellow-400'
                               )}
                             >
                               {item.label}
-                            </span>
-                          </Link>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                )}
+                            </Link>
+                          </li>
+                        )
+                      })}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
               </div>
             )
           })}
         </nav>
       </div>
 
-      {/* Rodapé com Assistente IA — gradiente no fundo */}
-      <div className="mt-6 pt-6 border-t border-neutral-800 px-2 pb-4">
+      {/* Rodapé */}
+      <div className="mt-6 pt-4 border-t border-zinc-800 px-2 pb-4">
         <Link
           href="/assistente"
+          title="Assistente IA"
           className={clsx(
-            'flex items-center text-black font-bold py-2 px-4 rounded hover:opacity-90 transition-all duration-300 ease-in-out w-full',
-            'bg-gradient-to-r from-amber-400 to-yellow-500',
+            'flex items-center text-black font-bold py-2 px-4 rounded transition-all duration-300 ease-in-out w-full',
+            'bg-gradient-to-r from-amber-400 to-yellow-500 hover:opacity-90 hover:scale-105',
             isCollapsed ? 'justify-center p-2' : 'justify-center'
           )}
         >
@@ -177,7 +191,7 @@ export default function Sidebar() {
           {!isCollapsed && <span className="ml-2">Assistente IA</span>}
         </Link>
         {!isCollapsed && (
-          <p className="text-xs text-gray-500 mt-4 text-center">© 2025 ContabilizIA</p>
+          <p className="text-xs text-zinc-500 mt-4 text-center">© 2025 ContabilizIA</p>
         )}
       </div>
     </aside>

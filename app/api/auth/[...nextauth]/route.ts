@@ -10,15 +10,16 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: '/', // página inicial personalizada (opcional)
+    signIn: '/', // Página inicial personalizada (opcional)
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      return '/dashboard' // redireciona após login com sucesso
+      return '/contabilidade/movimentacoes' // Redireciona após login com sucesso
     },
   },
 }
 
+// Handler para API Route do App Router
 const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
