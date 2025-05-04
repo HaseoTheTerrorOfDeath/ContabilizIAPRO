@@ -39,12 +39,23 @@ const menuItems = [
   {
     title: 'Departamento Pessoal',
     icon: Users,
-    items: [{ label: 'Folha de Pagamento', href: '/pessoal/folha' }],
+    items: [
+      { label: 'Folha de Pagamento', href: '/pessoal/folha' },
+      { label: 'Funcionários', href: '/pessoal/funcionarios' },
+      { label: 'Contracheques', href: '/pessoal/contracheques' },
+      { label: 'Férias', href: '/pessoal/ferias' },
+      { label: '13º Salário', href: '/pessoal/decimo-terceiro' },
+      { label: 'Encargos', href: '/pessoal/encargos' },
+    ],
   },
   {
     title: 'Abertura & Encerramento',
     icon: Briefcase,
-    items: [{ label: 'Gestão de Empresas', href: '/empresa/gestao' }],
+    items: [
+      { label: 'Gestão de Empresas', href: '/empresa/gestao' },
+      { label: 'Abertura de Empresa', href: '/empresa/abertura' },
+      { label: 'Encerramento de Empresa', href: '/empresa/encerramento' },
+    ],
   },
   {
     title: 'Consultoria',
@@ -77,7 +88,7 @@ export default function Sidebar() {
         isCollapsed ? 'w-16' : 'w-64'
       )}
     >
-      {/* TOPO fixado e 100% alinhado */}
+      {/* TOPO */}
       <div className="h-12 flex items-center px-4">
         <button
           onClick={toggleSidebar}
@@ -94,7 +105,7 @@ export default function Sidebar() {
         )}
       </div>
 
-      {/* MENU PRINCIPAL */}
+      {/* MENU */}
       <nav className="flex-1 overflow-y-auto space-y-2 px-2">
         {menuItems.map((group) => {
           const Icon = group.icon
@@ -127,7 +138,6 @@ export default function Sidebar() {
                   ))}
               </button>
 
-              {/* SUBITENS */}
               {!isCollapsed && isOpen && (
                 <ul className="mt-1 pl-6 space-y-1 text-sm">
                   {group.items.map((item) => {
